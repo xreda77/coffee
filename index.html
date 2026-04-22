@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بن البحرين | محمصة ومتجر أدوات القهوة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2C1810;
+            --secondary: #8B4513;
+            --accent: #D4A574;
+            --gold: #C9A961;
+            --cream: #F5E6D3;
+            --light: #FAF6F1;
+            --dark: #1A0F0A;
+            --text: #3E2723;
+            --success: #4CAF50;
+            --danger: #E74C3C;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background: var(--light); color: var(--text); overflow-x: hidden; }
+
+        /* Header */
+        header {
+            background: var(--primary);
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .top-bar { background: var(--dark); padding: 8px 0; font-size: 13px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .top-bar-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
+        .top-bar a { color: var(--accent); text-decoration: none; margin: 0 10px; transition: color 0.3s; }
+        .top-bar a:hover { color: var(--gold); }
+        .top-bar span { color: rgba(255,255,255,0.8); }
+
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 28px; font-weight: 900; color: var(--gold); text-decoration: none; }
+        .logo i { font-size: 32px; }
+
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; font-size: 16px; position: relative; transition: color 0.3s; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; right: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-actions { display: flex; gap: 20px; align-items: center; }
+        .cart-btn, .search-btn, .menu-btn {
+            background: none; border: none; color: white;
+            font-size: 20px; cursor: pointer; position: relative; transition: transform 0.3s;
+        }
+        .cart-btn:hover, .search-btn:hover { transform: scale(1.1); color: var(--gold); }
+        .cart-count {
+            position: absolute; top: -8px; right: -8px;
+            background: var(--danger); color: white; font-size: 11px;
+            width: 18px; height: 18px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: 700;
+        }
+        .menu-btn { display: none; }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1500;
+        }
+        .mobile-menu.active { display: block; }
+        .mobile-menu-panel {
+            position: absolute;
+            top: 0; right: 0;
+            width: 280px; height: 100%;
+            background: var(--primary);
+            padding: 30px 20px;
+            overflow-y: auto;
+            animation: slideFromRight 0.3s ease;
+        }
+        @keyframes slideFromRight { from { transform: translateX(280px); } to { transform: translateX(0); } }
+        .mobile-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .close-mobile-menu { background: none; border: none; color: white; font-size: 28px; cursor: pointer; }
+        .mobile-nav-links { list-style: none; }
+        .mobile-nav-links li { border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .mobile-nav-links a {
+            display: block; padding: 15px 10px;
+            color: white; text-decoration: none; font-size: 18px; font-weight: 600;
+            transition: color 0.3s;
+        }
+        .mobile-nav-links a:hover { color: var(--gold); }
+
+        /* Hero */
+        .hero {
+            margin-top: 120px; height: 85vh;
+            background: linear-gradient(135deg, rgba(44,24,16,0.88) 0%, rgba(26,15,10,0.93) 100%),
+                        url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=1920') center/cover no-repeat;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; color: white; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="%23C9A961" stroke-width="0.5" opacity="0.1"/></svg>');
+            background-size: 300px; animation: float 20s linear infinite;
+        }
+        @keyframes float { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-50px) rotate(360deg); } }
+        .hero-content { position: relative; z-index: 2; max-width: 800px; padding: 0 20px; }
+        .hero-badge {
+            display: inline-block; background: rgba(201,169,97,0.2);
+            border: 1px solid var(--gold); color: var(--gold);
+            padding: 8px 20px; border-radius: 30px; font-size: 14px; margin-bottom: 20px;
+        }
+        .hero h1 { font-size: 64px; font-weight: 900; margin-bottom: 20px; line-height: 1.2; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .hero h1 span { color: var(--gold); }
+        .hero p { font-size: 20px; margin-bottom: 40px; opacity: 0.9; line-height: 1.8; }
+        .hero-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+
+        .btn { padding: 15px 40px; border-radius: 50px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; border: none; font-family: 'Tajawal', sans-serif; }
+        .btn-primary { background: var(--gold); color: var(--dark); }
+        .btn-primary:hover { background: #b8941d; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(201,169,97,0.3); }
+        .btn-outline { background: transparent; color: white; border: 2px solid white; }
+        .btn-outline:hover { background: white; color: var(--dark); transform: translateY(-3px); }
+
+        /* Features Bar */
+        .features-bar { background: white; padding: 40px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .feature-item { display: flex; align-items: center; gap: 15px; padding: 20px; border-radius: 15px; transition: all 0.3s; }
+        .feature-item:hover { background: var(--light); transform: translateY(-5px); }
+        .feature-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--secondary), var(--primary)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; flex-shrink: 0; }
+        .feature-text h3 { font-size: 16px; font-weight: 700; margin-bottom: 5px; }
+        .feature-text p { font-size: 13px; color: #666; }
+
+        /* Sections */
+        .section { padding: 80px 0; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 42px; font-weight: 900; color: var(--primary); margin-bottom: 15px; }
+        .section-header p { font-size: 18px; color: #666; max-width: 600px; margin: 0 auto; }
+        .gold-line { width: 80px; height: 4px; background: var(--gold); margin: 20px auto; border-radius: 2px; }
+
+        /* Products */
+        .products-filter { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
+        .filter-btn {
+            padding: 10px 25px; border-radius: 30px; border: 2px solid var(--primary);
+            background: white; color: var(--primary); font-weight: 600; cursor: pointer;
+            transition: all 0.3s; font-family: 'Tajawal', sans-serif; font-size: 15px;
+        }
+        .filter-btn:hover, .filter-btn.active { background: var(--primary); color: white; }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: all 0.3s; position: relative; border: 1px solid rgba(0,0,0,0.05); }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .product-card.hidden { display: none; }
+
+        .product-badge { position: absolute; top: 15px; right: 15px; background: var(--danger); color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: 700; z-index: 10; }
+        .product-badge.new { background: var(--success); }
+        .product-badge.bestseller { background: var(--gold); color: var(--dark); }
+
+        .product-image { height: 250px; background: var(--cream); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .product-image img { max-width: 80%; max-height: 80%; object-fit: contain; transition: transform 0.5s; }
+        .product-card:hover .product-image img { transform: scale(1.1) rotate(3deg); }
+
+        .product-actions { position: absolute; bottom: -50px; left: 0; right: 0; display: flex; justify-content: center; gap: 10px; padding: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); transition: bottom 0.3s; }
+        .product-card:hover .product-actions { bottom: 0; }
+        .action-btn { width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--primary); color: white; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+        .action-btn:hover { background: var(--gold); color: var(--dark); transform: scale(1.1); }
+
+        .product-info { padding: 25px; }
+        .product-category { color: var(--secondary); font-size: 13px; font-weight: 600; margin-bottom: 8px; display: block; }
+        .product-title { font-size: 17px; font-weight: 700; margin-bottom: 10px; color: var(--primary); line-height: 1.4; }
+        .product-rating { display: flex; align-items: center; gap: 5px; margin-bottom: 15px; }
+        .stars { color: #FFC107; font-size: 14px; }
+        .rating-count { font-size: 13px; color: #999; }
+        .product-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 1px solid #eee; gap: 10px; }
+        .product-price { font-size: 20px; font-weight: 900; color: var(--primary); white-space: nowrap; }
+        .product-price .old-price { font-size: 13px; color: #999; text-decoration: line-through; margin-right: 8px; font-weight: 400; }
+        .add-to-cart { background: var(--primary); color: white; border: none; padding: 10px 18px; border-radius: 25px; cursor: pointer; font-weight: 700; transition: all 0.3s; display: flex; align-items: center; gap: 6px; font-family: 'Tajawal', sans-serif; font-size: 14px; white-space: nowrap; }
+        .add-to-cart:hover { background: var(--gold); color: var(--dark); }
+
+        /* Categories */
+        .categories-section { background: linear-gradient(to bottom, var(--light), white); }
+        .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+        .category-card { position: relative; height: 300px; border-radius: 20px; overflow: hidden; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .category-card:hover { transform: translateY(-5px); }
+        .category-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .category-card:hover img { transform: scale(1.08); }
+        .category-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(44,24,16,0.95), transparent); padding: 30px; color: white; }
+        .category-overlay h3 { font-size: 22px; font-weight: 900; margin-bottom: 5px; }
+        .category-overlay p { font-size: 14px; opacity: 0.9; }
+
+        /* Arabic Coffee Section */
+        .arabic-section { background: var(--primary); color: white; position: relative; overflow: hidden; }
+        .arabic-section::before { content: ''; position: absolute; top: -50%; right: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(201,169,97,0.1) 0%, transparent 70%); border-radius: 50%; }
+        .arabic-content { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .arabic-text h2 { font-size: 42px; font-weight: 900; margin-bottom: 20px; }
+        .arabic-text h2 span { color: var(--gold); }
+        .arabic-text p { font-size: 18px; line-height: 1.8; margin-bottom: 30px; opacity: 0.9; }
+        .arabic-features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+        .arabic-feature { display: flex; align-items: center; gap: 12px; }
+        .arabic-feature i { color: var(--gold); font-size: 20px; }
+        .arabic-image { position: relative; }
+        .arabic-image img { width: 100%; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+        .arabic-image .floating-card { position: absolute; bottom: -20px; left: -20px; background: white; color: var(--primary); padding: 20px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); max-width: 250px; }
+        .floating-card h4 { font-size: 18px; margin-bottom: 5px; }
+        .floating-card p { font-size: 14px; color: #666; }
+
+        /* Testimonials */
+        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .testimonial-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); position: relative; }
+        .testimonial-card::before { content: '"'; position: absolute; top: 20px; right: 30px; font-size: 80px; color: var(--cream); font-family: serif; line-height: 1; }
+        .testimonial-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .testimonial-avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--secondary), var(--primary)); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: 700; }
+        .testimonial-info h4 { font-size: 18px; font-weight: 700; margin-bottom: 5px; }
+        .testimonial-text { font-size: 16px; line-height: 1.8; color: #555; }
+
+        /* Blog */
+        .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .blog-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: all 0.3s; }
+        .blog-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+        .blog-image { height: 200px; background: var(--cream); position: relative; overflow: hidden; }
+        .blog-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .blog-card:hover .blog-image img { transform: scale(1.08); }
+        .blog-date { position: absolute; top: 15px; right: 15px; background: white; padding: 10px 15px; border-radius: 10px; text-align: center; font-weight: 700; color: var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .blog-date .day { font-size: 24px; display: block; line-height: 1; }
+        .blog-date .month { font-size: 12px; }
+        .blog-content { padding: 25px; }
+        .blog-meta { display: flex; gap: 15px; margin-bottom: 10px; font-size: 13px; color: #999; }
+        .blog-title { font-size: 19px; font-weight: 700; margin-bottom: 15px; color: var(--primary); line-height: 1.4; }
+        .blog-excerpt { font-size: 15px; color: #666; line-height: 1.7; margin-bottom: 20px; }
+        .read-more { color: var(--secondary); text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: gap 0.3s; }
+        .read-more:hover { gap: 15px; color: var(--primary); }
+
+        /* Newsletter */
+        .newsletter { background: linear-gradient(135deg, var(--secondary), var(--primary)); padding: 80px 0; position: relative; overflow: hidden; }
+        .newsletter::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="70" font-size="80" fill="rgba(255,255,255,0.03)">☕</text></svg>'); background-size: 200px; animation: slide 30s linear infinite; }
+        @keyframes slide { 0% { background-position: 0 0; } 100% { background-position: 200px 200px; } }
+        .newsletter-content { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 2; }
+        .newsletter-text { color: white; }
+        .newsletter-text h2 { font-size: 36px; font-weight: 900; margin-bottom: 20px; }
+        .newsletter-text p { font-size: 18px; opacity: 0.9; line-height: 1.8; }
+        .newsletter-form { display: flex; gap: 15px; }
+        .newsletter-form input { flex: 1; padding: 18px 25px; border: none; border-radius: 50px; font-size: 16px; outline: none; font-family: 'Tajawal', sans-serif; }
+        .newsletter-form button { padding: 18px 40px; background: var(--gold); color: var(--dark); border: none; border-radius: 50px; font-weight: 700; cursor: pointer; transition: all 0.3s; white-space: nowrap; font-family: 'Tajawal', sans-serif; font-size: 16px; }
+        .newsletter-form button:hover { background: #b8941d; transform: translateY(-2px); }
+
+        /* Contact Section */
+        #contact { background: var(--light); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+        .contact-info h3 { font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 25px; }
+        .contact-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 25px; }
+        .contact-icon { width: 50px; height: 50px; background: var(--primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 20px; flex-shrink: 0; }
+        .contact-item h4 { font-size: 16px; font-weight: 700; margin-bottom: 5px; color: var(--primary); }
+        .contact-item p { color: #666; line-height: 1.6; }
+        .contact-form-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 5px 25px rgba(0,0,0,0.07); }
+        .contact-form-box h3 { font-size: 24px; font-weight: 800; margin-bottom: 25px; color: var(--primary); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text); font-size: 14px; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 14px 18px; border: 2px solid #eee;
+            border-radius: 12px; font-size: 15px; outline: none;
+            transition: border-color 0.3s; font-family: 'Tajawal', sans-serif;
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .submit-btn { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.3s; font-family: 'Tajawal', sans-serif; }
+        .submit-btn:hover { background: var(--gold); color: var(--dark); transform: translateY(-2px); }
+
+        /* Footer */
+        footer { background: var(--dark); color: white; padding: 80px 0 30px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 60px; }
+        .footer-brand .logo { margin-bottom: 20px; display: inline-flex; }
+        .footer-brand p { font-size: 15px; line-height: 1.8; opacity: 0.8; margin-bottom: 25px; }
+        .social-links { display: flex; gap: 15px; }
+        .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.3s; }
+        .social-links a:hover { background: var(--gold); color: var(--dark); transform: translateY(-3px); }
+        .footer-column h3 { font-size: 20px; font-weight: 700; margin-bottom: 25px; color: var(--gold); }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 15px; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .footer-links a:hover { color: var(--gold); padding-right: 5px; }
+        .footer-contact p { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; font-size: 15px; opacity: 0.8; }
+        .footer-contact i { color: var(--gold); width: 20px; margin-top: 3px; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; opacity: 0.7; flex-wrap: wrap; gap: 15px; }
+        .payment-methods { display: flex; gap: 15px; font-size: 24px; }
+
+        /* Cart Sidebar */
+        .cart-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .cart-overlay.active { opacity: 1; visibility: visible; }
+        .cart-sidebar { position: fixed; top: 0; left: -420px; width: 400px; max-width: 90vw; height: 100vh; background: white; z-index: 2001; transition: left 0.3s; display: flex; flex-direction: column; }
+        .cart-sidebar.active { left: 0; }
+        .cart-header { padding: 25px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .cart-header h3 { font-size: 22px; font-weight: 900; }
+        .close-cart { background: none; border: none; font-size: 24px; cursor: pointer; color: #666; transition: color 0.3s; }
+        .close-cart:hover { color: var(--danger); }
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+        .cart-empty { text-align: center; padding: 60px 20px; color: #999; }
+        .cart-empty i { font-size: 60px; margin-bottom: 20px; display: block; }
+        .cart-item { display: flex; gap: 15px; padding: 15px; background: var(--light); border-radius: 15px; margin-bottom: 15px; }
+        .cart-item-image { width: 80px; height: 80px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 30px; flex-shrink: 0; overflow: hidden; }
+        .cart-item-image img { width: 100%; height: 100%; object-fit: cover; }
+        .cart-item-details { flex: 1; }
+        .cart-item-details h4 { font-size: 15px; margin-bottom: 5px; font-weight: 700; }
+        .cart-item-details .price { color: var(--secondary); font-weight: 700; }
+        .cart-item-quantity { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .qty-btn { width: 30px; height: 30px; border: 1px solid #ddd; background: white; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .qty-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .remove-item { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 16px; margin-right: auto; }
+        .cart-footer { padding: 25px; border-top: 1px solid #eee; background: var(--light); }
+        .cart-total { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 18px; font-weight: 700; }
+        .checkout-btn { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; font-family: 'Tajawal', sans-serif; }
+        .checkout-btn:hover { background: var(--gold); color: var(--dark); }
+
+        /* Quick View Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s; padding: 20px; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content { background: white; border-radius: 20px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; display: grid; grid-template-columns: 1fr 1fr; }
+        .modal-close { position: absolute; top: 20px; left: 20px; width: 40px; height: 40px; background: white; border: none; border-radius: 50%; cursor: pointer; font-size: 20px; z-index: 10; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: all 0.3s; }
+        .modal-close:hover { background: var(--danger); color: white; }
+        .modal-image { background: var(--cream); display: flex; align-items: center; justify-content: center; padding: 40px; min-height: 400px; }
+        .modal-image img { max-width: 100%; max-height: 350px; object-fit: contain; }
+        .modal-info { padding: 40px; }
+        .modal-info h2 { font-size: 26px; font-weight: 900; margin-bottom: 15px; color: var(--primary); line-height: 1.3; }
+        .modal-price { font-size: 30px; font-weight: 900; color: var(--secondary); margin-bottom: 20px; }
+        .modal-description { font-size: 15px; line-height: 1.8; color: #666; margin-bottom: 25px; }
+        .modal-actions { display: flex; gap: 15px; flex-wrap: wrap; }
+        .modal-actions .btn { flex: 1; justify-content: center; min-width: 150px; }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: white; padding: 18px 35px; border-radius: 50px; font-weight: 700; z-index: 4000; opacity: 0; transition: all 0.4s; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 12px; }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast i { color: var(--gold); }
+
+        /* Search Overlay */
+        .search-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(44,24,16,0.98); z-index: 2500; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .search-overlay.active { opacity: 1; visibility: visible; }
+        .search-container { width: 100%; max-width: 700px; padding: 20px; }
+        .search-input-wrapper { position: relative; margin-bottom: 30px; }
+        .search-input-wrapper input { width: 100%; padding: 25px 60px 25px 30px; font-size: 24px; border: none; border-bottom: 3px solid var(--gold); background: transparent; color: white; outline: none; font-family: 'Tajawal', sans-serif; }
+        .search-input-wrapper input::placeholder { color: rgba(255,255,255,0.4); }
+        .search-input-wrapper i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 24px; }
+        .close-search { position: absolute; top: 40px; left: 40px; background: none; border: none; color: white; font-size: 36px; cursor: pointer; transition: color 0.3s; }
+        .close-search:hover { color: var(--gold); }
+        .search-hint { color: rgba(255,255,255,0.5); font-size: 16px; text-align: center; }
+
+        /* Animations */
+        .fade-in { animation: fadeIn 0.6s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-in-right { animation: slideInRight 0.5s ease-out; }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--light); }
+        ::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 4px; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .menu-btn { display: block; }
+            .hero { margin-top: 100px; }
+            .hero h1 { font-size: 36px; }
+            .hero p { font-size: 16px; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .categories-grid { grid-template-columns: 1fr 1fr; }
+            .arabic-content, .newsletter-content, .contact-grid { grid-template-columns: 1fr; }
+            .testimonials-grid, .blog-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .modal-content { grid-template-columns: 1fr; }
+            .arabic-image .floating-card { position: static; margin-top: 20px; max-width: 100%; }
+            .section-header h2 { font-size: 30px; }
+            .arabic-text h2 { font-size: 30px; }
+        }
+        @media (max-width: 480px) {
+            .features-grid { grid-template-columns: 1fr; }
+            .categories-grid { grid-template-columns: 1fr; }
+            .newsletter-form { flex-direction: column; }
+            .hero h1 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            <div class="container">
+                <div class="top-bar-content">
+                    <div>
+                        <i class="fas fa-phone-alt"></i>
+                        <span id="headerPhone">+973 1700-0000</span> &nbsp;|&nbsp;
+                        <i class="fas fa-envelope"></i>
+                        <span id="headerEmail">info@bunbahrain.com</span>
+                    </div>
+                    <div>
+                        <a href="#products">التوصيل مجاني للطلبات فوق 20 د.ب</a> &nbsp;|&nbsp;
+                        <a href="#contact" id="headerAddress">المحرق - البحرين</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo">
+                    <i class="fas fa-coffee"></i>
+                    بن البحرين
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#products">المتجر</a></li>
+                    <li><a href="#categories">التصنيفات</a></li>
+                    <li><a href="#arabic">القهوة العربية</a></li>
+                    <li><a href="#blog">المدونة</a></li>
+                    <li><a href="#contact">تواصل معنا</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="search-btn" onclick="toggleSearch()" title="بحث">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="cart-btn" onclick="toggleCart()" title="سلة التسوق">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    <button class="menu-btn" onclick="toggleMobileMenu()" title="القائمة">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu" onclick="closeMobileMenuOutside(event)">
+        <div class="mobile-menu-panel">
+            <div class="mobile-menu-header">
+                <span class="logo" style="font-size:20px;"><i class="fas fa-coffee"></i> بن البحرين</span>
+                <button class="close-mobile-menu" onclick="toggleMobileMenu()">✕</button>
+            </div>
+            <ul class="mobile-nav-links">
+                <li><a href="#home" onclick="toggleMobileMenu()">الرئيسية</a></li>
+                <li><a href="#products" onclick="toggleMobileMenu()">المتجر</a></li>
+                <li><a href="#categories" onclick="toggleMobileMenu()">التصنيفات</a></li>
+                <li><a href="#arabic" onclick="toggleMobileMenu()">القهوة العربية</a></li>
+                <li><a href="#blog" onclick="toggleMobileMenu()">المدونة</a></li>
+                <li><a href="#contact" onclick="toggleMobileMenu()">تواصل معنا</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="hero-content fade-in">
+            <div class="hero-badge">☕ محمصة البحرين الأولى للقهوة المختصة</div>
+            <h1>نكهة <span>أصيلة</span> من قلب البحرين</h1>
+            <p>اكتشف مجموعتنا الفاخرة من المحاصيل المختارة بعناية وأدوات القهوة الاحترافية. نجلب لك تجربة القهوة الكاملة من البن الأخضر إلى الكوب المثالي.</p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn btn-primary">
+                    <i class="fas fa-shopping-bag"></i> تسوق الآن
+                </a>
+                <a href="#arabic" class="btn btn-outline">
+                    <i class="fas fa-mug-hot"></i> اكتشف القهوة العربية
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Bar -->
+    <div class="features-bar">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-truck"></i></div>
+                    <div class="feature-text">
+                        <h3>توصيل سريع</h3>
+                        <p>توصيل لجميع مناطق البحرين خلال 24 ساعة</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-medal"></i></div>
+                    <div class="feature-text">
+                        <h3>جودة مضمونة</h3>
+                        <p>محاصيل مختصة 100%، محمصة طازجة يومياً</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-tools"></i></div>
+                    <div class="feature-text">
+                        <h3>أدوات احترافية</h3>
+                        <p>معدات باريستا من أفضل الماركات العالمية</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <div class="feature-text">
+                        <h3>دعم فني مجاني</h3>
+                        <p>استشارات لتحضير القهوة المثالية في منزلك</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories -->
+    <section class="section categories-section" id="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2>تصنيفاتنا</h2>
+                <div class="gold-line"></div>
+                <p>اختر من مجموعتنا المتنوعة من المحاصيل والمعدات</p>
+            </div>
+            <div class="categories-grid" id="categoriesGrid">
+                <div class="category-card" onclick="filterProducts('beans'); scrollToProducts()">
+                    <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600" alt="محاصيل البن" onerror="this.src='https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=600'">
+                    <div class="category-overlay">
+                        <h3>محاصيل البن</h3>
+                        <p>25+ منتج</p>
+                    </div>
+                </div>
+                <div class="category-card" onclick="filterProducts('equipment'); scrollToProducts()">
+                    <img src="https://images.unsplash.com/photo-1517142089942-ba376ce32a2e?w=600" alt="أدوات القهوة" onerror="this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600'">
+                    <div class="category-overlay">
+                        <h3>أدوات القهوة</h3>
+                        <p>40+ منتج</p>
+                    </div>
+                </div>
+                <div class="category-card" onclick="filterProducts('arabic'); scrollToProducts()">
+                    <img src="https://images.unsplash.com/photo-1577968897966-3d2465efde69?w=600" alt="القهوة العربية" onerror="this.src='https://images.unsplash.com/photo-1514432324607-a09d9b4aefda?w=600'">
+                    <div class="category-overlay">
+                        <h3>القهوة العربية</h3>
+                        <p>15+ منتج</p>
+                    </div>
+                </div>
+                <div class="category-card" onclick="filterProducts('accessories'); scrollToProducts()">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600" alt="إكسسوارات" onerror="this.src='https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600'">
+                    <div class="category-overlay">
+                        <h3>إكسسوارات</h3>
+                        <p>30+ منتج</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section class="section" id="products" style="background: white;">
+        <div class="container">
+            <div class="section-header">
+                <h2>منتجاتنا المميزة</h2>
+                <div class="gold-line"></div>
+                <p>أفضل المحاصيل والمعدات المختارة بعناية لمحبي القهوة</p>
+            </div>
+
+            <div class="products-filter">
+                <button class="filter-btn active" onclick="filterProducts('all', this)">الكل</button>
+                <button class="filter-btn" onclick="filterProducts('beans', this)">محاصيل البن</button>
+                <button class="filter-btn" onclick="filterProducts('equipment', this)">المعدات</button>
+                <button class="filter-btn" onclick="filterProducts('arabic', this)">القهوة العربية</button>
+                <button class="filter-btn" onclick="filterProducts('accessories', this)">الإكسسوارات</button>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Product 1 -->
+                <div class="product-card" data-category="beans">
+                    <div class="product-badge bestseller">الأكثر مبيعاً</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400" alt="بن يمني موكا" onerror="this.src='https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400'">
+                        <div class="product-actions">
+                            <button class="action-btn" onclick="quickView(1)" title="عرض سريع"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn" title="المفضلة"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn" onclick="addToCart(1)" title="أضف للسلة"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">بن مختص</span>
+                        <h3 class="product-title">بن يمني موكا - إثيوبيا سيدامو</h3>
+                        <div class="product-rating">
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                            <span class="rating-count">(42 تقييم)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">8.500 <small>د.ب</small></div>
+                            <button class="add-to-cart" onclick="addToCart(1)"><i class="fas fa-plus"></i> أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" data-category="beans">
+                    <div class="product-badge new">جديد</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1587734195503-904fca47e0e9?w=400" alt="بن كولومبي" onerror="this.src='https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400'">
+                        <div class="product-actions">
+                            <button class="action-btn" onclick="quickView(2)"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn" onclick="addToCart(2)"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">بن مختص</span>
+                        <h3 class="product-title">كولومبيا سوبريمو - تحميص متوسط</h3>
+                        <div class="product-rating">
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
+                            <span class="rating-count">(28 تقييم)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">7.000 <small>د.ب</small></div>
+                            <button class="add-to-cart" onclick="addToCart(2)"><i class="fas fa-plus"></i> أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" data-category="equipment">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1517142089942-ba376ce32a2e?w=400" alt="مكينة اسبريسو" onerror="this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400'">
+                        <div class="product-actions">
+                            <button class="action-btn" onclick="quickView(3)"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn" onclick="addToCart(3)"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">معدات</span>
+                        <h3 class="product-title">مكينة إسبريسو برويفتك 300</h3>
+                        <div class="product-rating">
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                            <span class="rating-count">(15 تقييم)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">450.000 <small>د.ب</small></div>
+                            <button class="add-to-cart" onclick="addToCart(3)"><i class="fas fa-plus"></i> أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" data-category="equipment">
+                    <div class="product-badge">خصم 15%</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1520981825232-ece5fae45120?w=400" alt="طاحونة قهوة" onerror="this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400'">
+                        <div class="product-actions">
+                            <button class="action-btn" onclick="quickView(4)"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn" onclick="addToCart(4)"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">معدات</span>
+                        <h3 class="product-title">طاحونة يوريكا مينيون - Eureka Mignon</h3>
+                        <div class="product-rating">
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                            <span class="rating-count">(33 تقييم)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price"><span class="old-price">200.000</span> 170.000 <small>د.ب</small></div>
+                            <button class="add-to-cart" onclick="addToCart(4)"><i class="fas fa-plus"></i> أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" data-category="arabic">
+                    <div class="product-badge bestseller">الأكثر مبيعاً</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1577968897966-3d2465efde69?w=400" alt="قهوة عربية" onerror="this.src='https://images.unsplash.com/photo-1514432324607-a09d9b4aefda?w=400'">
+                        <div class="product-actions">
+                            <button class="action-btn" onclick="quickView(5)"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn" onclick="addToCart(5)"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">قهوة عربية</span>
+                        <h3 class="product-title">قهوة عربية فاخرة بالهيل والزعفران</h3>
+                        <div class="product-rating">
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                            <span class="rating-count">(56 تقييم)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">5.500 <small>د.ب</small></div>
+                            <button class="add-to-cart" onclick="addToCart(5)"><i class="fas fa-plus"></i> أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card" data-category="accessories">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400" alt="أدوات باريستا" onerror="this.src='https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400'">
+                        <div class="product-actions">
+                            <button class="action-btn" onclick="quickView(6)"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn" onclick="addToCart(6)"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">إكسسوارات</span>
+                        <h3 class="product-title">طقم باريستا احترافي - تامبر وموزع</h3>
+                        <div class="product-rating">
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
+                            <span class="rating-count">(19 تقييم)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">25.000 <small>د.ب</small></div>
+                            <button class="add-to-cart" onclick="addToCart(6)"><i class="fas fa-plus"></i> أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="product-card" data-category="beans">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=400" alt="بن كينيا" onerror="this.src='https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400'">
+                        <div class="product-actions">
+                            <button class="action-btn" onclick="quickView(7)"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn" onclick="addToCart(7)"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">بن مختص</span>
+                        <h3 class="product-title">كينيا AA - نوتات توت وحمضيات</h3>
+                        <div class="product-rating">
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                            <span class="rating-count">(21 تقييم)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">9.000 <small>د.ب</small></div>
+                            <button class="add-to-cart" onclick="addToCart(7)"><i class="fas fa-plus"></i> أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card" data-category="equipment">
+                    <div class="product-badge new">جديد</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400" alt="كيمكس" onerror="this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400'">
+                        <div class="product-actions">
+                            <button class="action-btn" onclick="quickView(8)"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn" onclick="addToCart(8)"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">معدات</span>
+                        <h3 class="product-title">كيمكس 6 أكواب - زجاج مقاوم للحرارة</h3>
+                        <div class="product-rating">
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                            <span class="rating-count">(12 تقييم)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">18.000 <small>د.ب</small></div>
+                            <button class="add-to-cart" onclick="addToCart(8)"><i class="fas fa-plus"></i> أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arabic Coffee -->
+    <section class="section arabic-section" id="arabic">
+        <div class="container">
+            <div class="arabic-content">
+                <div class="arabic-text">
+                    <h2>تجربة <span>القهوة العربية</span> الأصيلة</h2>
+                    <p>اكتشف سر القهوة العربية التقليدية المُحضَّرة بأفضل حبوب البن العربية المختارة من اليمن وإثيوبيا. نقدم لك تجربة ضيافة خليجية أصيلة مع نكهات الهيل والزعفران والقرنفل.</p>
+                    <div class="arabic-features">
+                        <div class="arabic-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>حبوب عربية 100% مختارة يدوياً</span>
+                        </div>
+                        <div class="arabic-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>تحميص خفيف تقليدي</span>
+                        </div>
+                        <div class="arabic-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>بهارات طبيعية فاخرة</span>
+                        </div>
+                        <div class="arabic-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>دلّة وفناجين تقليدية</span>
+                        </div>
+                    </div>
+                    <a href="#products" class="btn btn-primary"><i class="fas fa-shopping-bag"></i> اكتشف المجموعة</a>
+                </div>
+                <div class="arabic-image">
+                    <img src="https://images.unsplash.com/photo-1577968897966-3d2465efde69?w=800" alt="القهوة العربية التقليدية" onerror="this.src='https://images.unsplash.com/photo-1514432324607-a09d9b4aefda?w=800'">
+                    <div class="floating-card">
+                        <h4>تراث عريق</h4>
+                        <p>القهوة العربية مدرجة في قائمة اليونسكو للتراث الثقافي غير المادي</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section" style="background: white;">
+        <div class="container">
+            <div class="section-header">
+                <h2>آراء عملائنا</h2>
+                <div class="gold-line"></div>
+                <p>ماذا يقول محبو القهوة في البحرين عن تجربتهم</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">ع</div>
+                        <div class="testimonial-info">
+                            <h4>عبدالله المحمود</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"أفضل محمصة في البحرين بلا منازع! البن اليمني عندهم لا يُضاهى، والتوصيل سريع جداً. أنصح كل محبي القهوة المختصة بالتجربة."</p>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">ف</div>
+                        <div class="testimonial-info">
+                            <h4>فاطمة العلي</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"اشتريت طاحونة يوريكا ومجموعة V60، الخدمة ممتازة والاستشارات المجانية ساعدتني كثيراً في تحسين مستواي بتحضير القهوة. شكراً لفريق بن البحرين!"</p>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">م</div>
+                        <div class="testimonial-info">
+                            <h4>محمد الكعبي</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"القهوة العربية عندهم أصيلة جداً، طعم ورائحة تذكرك بأيام زمان. أطلب باستمرار للمناسبات العائلية والضيافة. جودة لا تُضاهى."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog -->
+    <section class="section" id="blog">
+        <div class="container">
+            <div class="section-header">
+                <h2>مدونة القهوة</h2>
+                <div class="gold-line"></div>
+                <p>نصائح وأسرار عالم القهوة من خبرائنا</p>
+            </div>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600" alt="تحضير القهوة" onerror="this.src='https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=600'">
+                        <div class="blog-date"><span class="day">15</span><span class="month">أبريل</span></div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-user"></i> أحمد البنا</span>
+                            <span><i class="fas fa-clock"></i> 5 دقائق</span>
+                        </div>
+                        <h3 class="blog-title">دليلك الشامل لتحضير الإسبريسو المثالي في المنزل</h3>
+                        <p class="blog-excerpt">تعلّم أساسيات ضغط البن ودرجة الطحن ونسب الاستخلاص لتحضير إسبريسو غني بالكريما والنكهة...</p>
+                        <a href="#" class="read-more">اقرأ المزيد <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600" alt="تحميص البن" onerror="this.src='https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=600'">
+                        <div class="blog-date"><span class="day">10</span><span class="month">أبريل</span></div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-user"></i> سارة القحطاني</span>
+                            <span><i class="fas fa-clock"></i> 8 دقائق</span>
+                        </div>
+                        <h3 class="blog-title">فن التحميص: رحلة البن الأخضر إلى الكوب المحمص</h3>
+                        <p class="blog-excerpt">اكتشف مراحل التحميص المختلفة وكيف تؤثر على النكهة النهائية من التحميص الخفيف إلى الداكن...</p>
+                        <a href="#" class="read-more">اقرأ المزيد <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefda?w=600" alt="القهوة العربية" onerror="this.src='https://images.unsplash.com/photo-1577968897966-3d2465efde69?w=600'">
+                        <div class="blog-date"><span class="day">05</span><span class="month">أبريل</span></div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-user"></i> خالد الدوسري</span>
+                            <span><i class="fas fa-clock"></i> 6 دقائق</span>
+                        </div>
+                        <h3 class="blog-title">تاريخ القهوة العربية: من اليمن إلى العالم</h3>
+                        <p class="blog-excerpt">رحلة عبر الزمن لاكتشاف أصول القهوة العربية وأهميتها الثقافية والاجتماعية في الخليج العربي...</p>
+                        <a href="#" class="read-more">اقرأ المزيد <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h2>اشترك في نشرتنا البريدية</h2>
+                    <p>احصل على أحدث العروض والخصومات الحصرية وأخبار عالم القهوة مباشرةً في بريدك الإلكتروني.</p>
+                </div>
+                <div>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="بريدك الإلكتروني..." id="newsletterEmail">
+                        <button onclick="subscribeNewsletter()">اشترك الآن</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>تواصل معنا</h2>
+                <div class="gold-line"></div>
+                <p>نحن هنا للإجابة على جميع استفساراتكم</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>معلومات التواصل</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div>
+                            <h4>الهاتف</h4>
+                            <p id="contactPhone">+973 1700-0000</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4>البريد الإلكتروني</h4>
+                            <p id="contactEmail">info@bunbahrain.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h4>العنوان</h4>
+                            <p id="contactAddress">المحرق، مملكة البحرين</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <h4>ساعات العمل</h4>
+                            <p id="contactHours">السبت - الخميس: 9 صباحاً - 10 مساءً</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-box">
+                    <h3>أرسل رسالة</h3>
+                    <div class="form-group">
+                        <label>الاسم الكامل</label>
+                        <input type="text" placeholder="اسمك الكريم">
+                    </div>
+                    <div class="form-group">
+                        <label>البريد الإلكتروني</label>
+                        <input type="email" placeholder="بريدك الإلكتروني">
+                    </div>
+                    <div class="form-group">
+                        <label>الموضوع</label>
+                        <select>
+                            <option>استفسار عن منتج</option>
+                            <option>طلب شراء بالجملة</option>
+                            <option>دعم فني</option>
+                            <option>شكوى أو اقتراح</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>الرسالة</label>
+                        <textarea placeholder="اكتب رسالتك هنا..."></textarea>
+                    </div>
+                    <button class="submit-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i> إرسال الرسالة</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#home" class="logo"><i class="fas fa-coffee"></i> بن البحرين</a>
+                    <p>محمصة البحرين الأولى للقهوة المختصة. نجلب لك أفضل المحاصيل من مزارع العالم ونحمصها بعناية لتحصل على تجربة قهوة لا تُنسى.</p>
+                    <div class="social-links">
+                        <a href="#" title="إنستغرام"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="تويتر"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="واتساب"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" title="تيك توك"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#products">المتجر</a></li>
+                        <li><a href="#categories">التصنيفات</a></li>
+                        <li><a href="#arabic">القهوة العربية</a></li>
+                        <li><a href="#blog">المدونة</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>خدماتنا</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">التوصيل للمنازل</a></li>
+                        <li><a href="#">الطلب بالجملة</a></li>
+                        <li><a href="#">تدريب الباريستا</a></li>
+                        <li><a href="#">استشارات القهوة</a></li>
+                        <li><a href="#">هدايا مخصصة</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column footer-contact">
+                    <h3>تواصل معنا</h3>
+                    <p><i class="fas fa-phone-alt"></i> <span id="footerPhone">+973 1700-0000</span></p>
+                    <p><i class="fas fa-envelope"></i> <span id="footerEmail">info@bunbahrain.com</span></p>
+                    <p><i class="fas fa-map-marker-alt"></i> <span id="footerAddress">المحرق، مملكة البحرين</span></p>
+                    <p><i class="fas fa-clock"></i> <span id="footerHours">السبت - الخميس: 9ص - 10م</span></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 بن البحرين. جميع الحقوق محفوظة.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa" title="فيزا"></i>
+                    <i class="fab fa-cc-mastercard" title="ماستركارد"></i>
+                    <i class="fab fa-cc-apple-pay" title="آبل باي"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> سلة التسوق</h3>
+            <button class="close-cart" onclick="toggleCart()">✕</button>
+        </div>
+        <div class="cart-items" id="cartItemsList">
+            <div class="cart-empty">
+                <i class="fas fa-shopping-cart"></i>
+                <p>سلتك فارغة</p>
+                <p style="font-size:13px;margin-top:5px;">أضف منتجات لتبدأ التسوق</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>المجموع:</span>
+                <span id="cartTotal">0.000 د.ب</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()"><i class="fas fa-lock"></i> إتمام الطلب</button>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal-content" id="modalContent">
+            <button class="modal-close" onclick="closeQuickView()">✕</button>
+            <div class="modal-image"><img id="modalImg" src="" alt=""></div>
+            <div class="modal-info">
+                <span class="product-category" id="modalCategory"></span>
+                <h2 id="modalTitle"></h2>
+                <div class="modal-price" id="modalPrice"></div>
+                <p class="modal-description" id="modalDesc"></p>
+                <div class="stars" style="margin-bottom:20px;" id="modalStars"></div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" id="modalAddBtn" onclick="addToCartFromModal()">
+                        <i class="fas fa-shopping-cart"></i> أضف للسلة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <button class="close-search" onclick="toggleSearch()">✕</button>
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <input type="text" placeholder="ابحث عن منتج..." id="searchInput" onkeyup="handleSearch(event)">
+                <i class="fas fa-search"></i>
+            </div>
+            <p class="search-hint">اضغط Enter للبحث أو اكتب اسم المنتج</p>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg"></span></div>
+
+    <script>
+    // ============ DATA ============
+    const products = {
+        1: { id:1, name:'بن يمني موكا - إثيوبيا سيدامو', price:8.500, category:'بن مختص', img:'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600', desc:'بن يمني موكا مختار من أفضل مزارع إثيوبيا. يتميز بنكهة غنية بالشوكولاتة والفواكه المجففة مع حموضة لطيفة. محمص طازجاً بتحميص متوسط.', stars:5 },
+        2: { id:2, name:'كولومبيا سوبريمو - تحميص متوسط', price:7.000, category:'بن مختص', img:'https://images.unsplash.com/photo-1587734195503-904fca47e0e9?w=600', desc:'محصول كولومبيا سوبريمو الشهير. نكهة متوازنة بين الحموضة اللطيفة والحلاوة المتوسطة مع لمسة من الكراميل والجوز.', stars:4.5 },
+        3: { id:3, name:'مكينة إسبريسو برويفتك 300', price:450.000, category:'معدات', img:'https://images.unsplash.com/photo-1517142089942-ba376ce32a2e?w=600', desc:'مكينة إسبريسو احترافية للاستخدام المنزلي والتجاري الخفيف. ضغط 15 بار، خزان 2 لتر، مع نظام تبخير مدمج لإعداد اللاتيه والكابتشينو.', stars:5 },
+        4: { id:4, name:'طاحونة يوريكا مينيون', price:170.000, category:'معدات', img:'https://images.unsplash.com/photo-1520981825232-ece5fae45120?w=600', desc:'طاحونة يوريكا مينيون الإيطالية الشهيرة. طحن دقيق ومتجانس لجميع أساليب التحضير. 55 مستوى طحن مختلف مع موتور هادئ.', stars:5 },
+        5: { id:5, name:'قهوة عربية فاخرة بالهيل والزعفران', price:5.500, category:'قهوة عربية', img:'https://images.unsplash.com/photo-1577968897966-3d2465efde69?w=600', desc:'قهوة عربية تقليدية مُعدّة من أجود حبوب البن العربي مع هيل حبشي وزعفران إيراني وقرنفل. تحميص خفيف تقليدي يحافظ على الرائحة الأصيلة.', stars:5 },
+        6: { id:6, name:'طقم باريستا احترافي - تامبر وموزع', price:25.000, category:'إكسسوارات', img:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600', desc:'طقم باريستا كامل يشمل تامبر بضغط 30 باوند ومُوزّع BDT 58.5ملم. مصنوع من الستانلس ستيل عالي الجودة للحصول على استخلاص مثالي.', stars:4.5 },
+        7: { id:7, name:'كينيا AA - نوتات توت وحمضيات', price:9.000, category:'بن مختص', img:'https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=600', desc:'بن كينيا AA من مرتفعات كيريانياغا على ارتفاع 1800م. يتميز بنكهة واضحة من التوت الأسود والكرز مع حموضة مشرقة ونظيفة.', stars:5 },
+        8: { id:8, name:'كيمكس 6 أكواب - زجاج مقاوم للحرارة', price:18.000, category:'معدات', img:'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600', desc:'إبريق كيمكس الكلاسيكي من الزجاج البوروسيليكات عالي الجودة. يسع 6 أكواب مع مقبض خشبي أنيق. مثالي لتحضير قهوة مصفاة نقية وشفافة.', stars:5 },
+    };
+
+    // ============ SITE DATA (from admin) ============
+    let siteData = JSON.parse(localStorage.getItem('bunbh_sitedata') || 'null') || {
+        phone: '+973 1700-0000',
+        email: 'info@bunbahrain.com',
+        address: 'المحرق، مملكة البحرين',
+        hours: 'السبت - الخميس: 9ص - 10م'
+    };
+    function applySiteData() {
+        document.querySelectorAll('#headerPhone, #contactPhone, #footerPhone').forEach(el => { if(el) el.textContent = siteData.phone; });
+        document.querySelectorAll('#headerEmail, #contactEmail, #footerEmail').forEach(el => { if(el) el.textContent = siteData.email; });
+        document.querySelectorAll('#contactAddress, #footerAddress').forEach(el => { if(el) el.textContent = siteData.address; });
+        document.querySelectorAll('#contactHours, #footerHours').forEach(el => { if(el) el.textContent = siteData.hours; });
+    }
+    applySiteData();
+    window.addEventListener('storage', () => {
+        siteData = JSON.parse(localStorage.getItem('bunbh_sitedata') || '{}');
+        applySiteData();
+    });
+
+    // ============ CART ============
+    let cart = [];
+    function toggleCart() {
+        document.getElementById('cartOverlay').classList.toggle('active');
+        document.getElementById('cartSidebar').classList.toggle('active');
+    }
+    function addToCart(id) {
+        const p = products[id];
+        if (!p) return;
+        const existing = cart.find(i => i.id === id);
+        if (existing) { existing.qty++; }
+        else { cart.push({ ...p, qty: 1 }); }
+        updateCartUI();
+        showToast('✓ تمت الإضافة إلى السلة: ' + p.name);
+    }
+    let currentModalId = null;
+    function addToCartFromModal() { if(currentModalId) addToCart(currentModalId); closeQuickView(); }
+    function updateCartUI() {
+        const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+        document.getElementById('cartCount').textContent = cart.reduce((s,i) => s + i.qty, 0);
+        document.getElementById('cartTotal').textContent = total.toFixed(3) + ' د.ب';
+        const list = document.getElementById('cartItemsList');
+        if (cart.length === 0) {
+            list.innerHTML = '<div class="cart-empty"><i class="fas fa-shopping-cart"></i><p>سلتك فارغة</p><p style="font-size:13px;margin-top:5px;">أضف منتجات لتبدأ التسوق</p></div>';
+        } else {
+            list.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-image"><img src="${item.img}" alt="${item.name}" onerror="this.parentElement.innerHTML='☕'"></div>
+                    <div class="cart-item-details">
+                        <h4>${item.name}</h4>
+                        <div class="price">${item.price.toFixed(3)} د.ب</div>
+                        <div class="cart-item-quantity">
+                            <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                            <button class="remove-item" onclick="removeItem(${item.id})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>`).join('');
+        }
+    }
+    function changeQty(id, delta) {
+        const item = cart.find(i => i.id === id);
+        if (!item) return;
+        item.qty += delta;
+        if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+        updateCartUI();
+    }
+    function removeItem(id) {
+        cart = cart.filter(i => i.id !== id);
+        updateCartUI();
+        showToast('تم حذف المنتج من السلة');
+    }
+    function checkout() {
+        if (cart.length === 0) { showToast('سلتك فارغة!'); return; }
+        showToast('شكراً! سيتم التواصل معك لإتمام الطلب قريباً.');
+        cart = [];
+        updateCartUI();
+        toggleCart();
+    }
+
+    // ============ FILTER ============
+    function filterProducts(cat, btn) {
+        document.querySelectorAll('.product-card').forEach(card => {
+            if (cat === 'all' || card.dataset.category === cat) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+    }
+    function scrollToProducts() {
+        document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ============ QUICK VIEW ============
+    function quickView(id) {
+        const p = products[id];
+        if (!p) return;
+        currentModalId = id;
+        document.getElementById('modalImg').src = p.img;
+        document.getElementById('modalImg').alt = p.name;
+        document.getElementById('modalCategory').textContent = p.category;
+        document.getElementById('modalTitle').textContent = p.name;
+        document.getElementById('modalPrice').textContent = p.price.toFixed(3) + ' د.ب';
+        document.getElementById('modalDesc').textContent = p.desc;
+        const stars = Math.floor(p.stars);
+        const half = p.stars % 1 >= 0.5;
+        let starsHtml = '';
+        for(let i=0;i<stars;i++) starsHtml += '<i class="fas fa-star"></i>';
+        if(half) starsHtml += '<i class="fas fa-star-half-alt"></i>';
+        document.getElementById('modalStars').innerHTML = starsHtml;
+        document.getElementById('modalOverlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal(e) { if (e.target === document.getElementById('modalOverlay')) closeQuickView(); }
+    function closeQuickView() {
+        document.getElementById('modalOverlay').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // ============ SEARCH ============
+    function toggleSearch() {
+        document.getElementById('searchOverlay').classList.toggle('active');
+        if (document.getElementById('searchOverlay').classList.contains('active')) {
+            setTimeout(() => document.getElementById('searchInput').focus(), 300);
+        }
+    }
+    function handleSearch(e) {
+        if (e.key === 'Enter') {
+            const q = e.target.value.toLowerCase().trim();
+            if (!q) return;
+            toggleSearch();
+            document.querySelectorAll('.product-card').forEach(card => {
+                const title = card.querySelector('.product-title').textContent.toLowerCase();
+                card.classList.toggle('hidden', !title.includes(q));
+            });
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            scrollToProducts();
+            showToast('نتائج البحث عن: ' + e.target.value);
+        }
+    }
+
+    // ============ MOBILE MENU ============
+    function toggleMobileMenu() {
+        document.getElementById('mobileMenu').classList.toggle('active');
+    }
+    function closeMobileMenuOutside(e) {
+        if (e.target === document.getElementById('mobileMenu')) toggleMobileMenu();
+    }
+
+    // ============ NEWSLETTER ============
+    function subscribeNewsletter() {
+        const email = document.getElementById('newsletterEmail').value;
+        if (!email || !email.includes('@')) { showToast('الرجاء إدخال بريد إلكتروني صحيح'); return; }
+        showToast('تم الاشتراك بنجاح! شكراً لك 🎉');
+        document.getElementById('newsletterEmail').value = '';
+    }
+
+    // ============ CONTACT ============
+    function sendMessage() {
+        showToast('تم إرسال رسالتك بنجاح! سنتواصل معك قريباً 📧');
+    }
+
+    // ============ TOAST ============
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toastMsg').textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    // ============ SMOOTH SCROLL ============
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const target = document.querySelector(a.getAttribute('href'));
+            if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+        });
+    });
+    </script>
+</body>
+</html>
